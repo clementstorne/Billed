@@ -1,3 +1,5 @@
+.DS_Store
+
 front/node_modules/
 front/coverage/
 front/.idea
