@@ -9,15 +9,15 @@ Projet n°9 du [parcours Développeur d'Application - JavaScript React](https://
 - JavaScript
 - Jest
 
-## Installation
+## 📦 Installation
 
-### Prérequis
+### 🧰 Prérequis
 
 Pour lancer le projet, vous devez avoir les programmes suivants installés sur votre machine :
 
 - NodeJS
 
-### Installation et démarrage de l'API
+### 🔧 Installation et démarrage de l'API
 
 Dans le dossier **back**, avec le terminal, exécutez la commande suivante pour installer les packages requis pour le fonctionnement du backend :
 
@@ -39,7 +39,7 @@ billapp-backend@1.0.0 run:dev
 NODE_ENV=development sequelize-cli db:migrate && node server.js
 ```
 
-### Installation de l'application Frontend
+### 🖥️ Installation de l'application Frontend
 
 Dans le dossier **front**, avec le terminal, exécutez la commande suivante pour installer les packages requis pour le fonctionnement du frontend de l'application :
 
@@ -61,7 +61,7 @@ live-server
 
 Par défaut, l'application est accessible à l'adresse `http://127.0.0.1:8080/`
 
-### Comptes et utilisateurs
+### 👥 Comptes et utilisateurs
 
 Vous pouvez vous connecter en utilisant les comptes:
 
