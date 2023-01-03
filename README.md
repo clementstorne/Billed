@@ -60,3 +60,19 @@ live-server
 ```
 
 Par défaut, l'application est accessible à l'adresse `http://127.0.0.1:8080/`
+
+### Comptes et utilisateurs
+
+Vous pouvez vous connecter en utilisant les comptes:
+
+```
+Utilisateur : admin@test.tld
+Mot de passe : admin
+```
+
+ou
+
+```
+Utilisateur : employee@test.tld
+Mot de passe : employee
+```
