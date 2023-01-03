@@ -2,7 +2,9 @@ front/node_modules/
 front/coverage/
 front/.idea
 front/package-lock.json
+front/README.md
 
 back/database_test.sqlite
 back/node_modules/
 back/coverage/
+back/README.md
