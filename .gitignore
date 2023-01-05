@@ -5,6 +5,7 @@ front/coverage/
 front/.idea
 front/package-lock.json
 front/README.md
+front/test-report.html
 
 back/database_test.sqlite
 back/node_modules/
