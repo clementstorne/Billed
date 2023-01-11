@@ -11,3 +11,5 @@ back/database_test.sqlite
 back/node_modules/
 back/coverage/
 back/README.md
+
+.vscode/
