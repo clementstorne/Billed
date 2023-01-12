@@ -9,10 +9,11 @@ import { bills } from "../fixtures/bills.js";
 import { ROUTES_PATH } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store";
+import store from "../app/Store.js";
 
 import router from "../app/Router.js";
 
-const store = jest.mock("../app/store", () => mockStore);
+jest.mock("../app/Store", () => mockStore);
 
 describe("Given I am connected as an employee", () => {
   beforeAll(() => {
@@ -130,8 +131,6 @@ describe("Given I am connected as an employee", () => {
 
     // Test d'intégration GET
     test("Then the bills should be fetched from mock API GET", async () => {
-      const store = jest.mock("../app/store", () => mockStore);
-
       const bill = new Bills({
         document,
         onNavigate,
@@ -141,23 +140,9 @@ describe("Given I am connected as an employee", () => {
       const mockedBills = await bill.getBills();
       document.body.innerHTML = BillsUI({ data: mockedBills });
 
-      // document.body.innerHTML = BillsUI({ data: bills });
-
       await waitFor(() => screen.getByText("Mes notes de frais"));
-      // const mockedBills = await mockStore.bills().list();
-
-      // const mockedBillsIds = [];
-      // mockedBills.forEach((bill) => {
-      //   mockedBillsIds.push(bill.id);
-      // });
 
       expect(mockedBills.length).toBe(4);
-      // expect(mockedBillsIds).toStrictEqual([
-      //   "47qAXb6fIm2zOKkLzMro",
-      //   "BeKy5Mo4jkmdfPGYpTxZ",
-      //   "UIUZtnPQvnbFnB0ozvJh",
-      //   "qcCK3SzECmaZAGRrHjaC",
-      // ]);
     });
 
     test("Then the bills fetched from mock API GET should be displayed", async () => {
@@ -177,6 +162,45 @@ describe("Given I am connected as an employee", () => {
       expect(billsContainer.innerHTML).toMatch(thirdMockedBill);
       expect(billsContainer.innerHTML).toMatch(fourthMockedBill);
     });
+
+    // describe("And there is an error in the data fetched", () => {
+    //   test("x", async () => {
+    //     mockStore.bills.mockImplementationOnce(() => {
+    //       return {
+    //         list: () => {
+    //           return Promise.resolve([
+    //             {
+    //               id: "47qAXb6fIm2zOKkLzMro",
+    //               vat: "80",
+    //               fileUrl:
+    //                 "https://test.storage.tld/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+    //               status: "pending",
+    //               type: "Hôtel et logement",
+    //               commentary: "séminaire billed",
+    //               name: "encore",
+    //               fileName: "preview-facture-free-201801-pdf-1.jpg",
+    //               date: "error",
+    //               amount: 400,
+    //               commentAdmin: "ok",
+    //               email: "a@a",
+    //               pct: 20,
+    //             },
+    //           ]);
+    //         },
+    //       };
+    //     });
+
+    //     const bill = new Bills({
+    //       document,
+    //       onNavigate,
+    //       store,
+    //       localStorage,
+    //     });
+
+    //     const test = await bill.getBills();
+    //   });
+    // });
+
     describe("And an error occurs on API", () => {
       beforeEach(() => {
         jest.spyOn(mockStore, "bills");
