@@ -163,43 +163,51 @@ describe("Given I am connected as an employee", () => {
       expect(billsContainer.innerHTML).toMatch(fourthMockedBill);
     });
 
-    // describe("And there is an error in the data fetched", () => {
-    //   test("x", async () => {
-    //     mockStore.bills.mockImplementationOnce(() => {
-    //       return {
-    //         list: () => {
-    //           return Promise.resolve([
-    //             {
-    //               id: "47qAXb6fIm2zOKkLzMro",
-    //               vat: "80",
-    //               fileUrl:
-    //                 "https://test.storage.tld/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
-    //               status: "pending",
-    //               type: "Hôtel et logement",
-    //               commentary: "séminaire billed",
-    //               name: "encore",
-    //               fileName: "preview-facture-free-201801-pdf-1.jpg",
-    //               date: "error",
-    //               amount: 400,
-    //               commentAdmin: "ok",
-    //               email: "a@a",
-    //               pct: 20,
-    //             },
-    //           ]);
-    //         },
-    //       };
-    //     });
+    describe("And there is an error in the data fetched", () => {
+      test("Then an error should be displayed in console", async () => {
+        jest.spyOn(mockStore, "bills");
+        const logSpy = jest.spyOn(console, "log");
+        mockStore.bills.mockImplementationOnce(() => {
+          return {
+            list: () => {
+              return Promise.resolve([
+                {
+                  id: "47qAXb6fIm2zOKkLzMro",
+                  vat: "80",
+                  fileUrl:
+                    "https://test.storage.tld/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+                  status: "pending",
+                  type: "Hôtel et logement",
+                  commentary: "séminaire billed",
+                  name: "encore",
+                  fileName: "preview-facture-free-201801-pdf-1.jpg",
+                  date: "null",
+                  amount: 400,
+                  commentAdmin: "ok",
+                  email: "a@a",
+                  pct: 20,
+                },
+              ]);
+            },
+          };
+        });
 
-    //     const bill = new Bills({
-    //       document,
-    //       onNavigate,
-    //       store,
-    //       localStorage,
-    //     });
+        const bill = new Bills({
+          document,
+          onNavigate,
+          store,
+          localStorage,
+        });
 
-    //     const test = await bill.getBills();
-    //   });
-    // });
+        const mockedBills = await bill.getBills();
+        document.body.innerHTML = BillsUI({ data: mockedBills });
+
+        await waitFor(() => screen.getByText("Mes notes de frais"));
+
+        expect(logSpy).toHaveBeenCalledTimes(2);
+        // expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("Error"));
+      });
+    });
 
     describe("And an error occurs on API", () => {
       beforeEach(() => {
