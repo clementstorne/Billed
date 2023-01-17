@@ -6,7 +6,7 @@ import { screen, waitFor, fireEvent } from "@testing-library/dom";
 import BillsUI from "../views/BillsUI.js";
 import Bills from "../containers/Bills.js";
 import { bills } from "../fixtures/bills.js";
-import { ROUTES_PATH } from "../constants/routes.js";
+import { ROUTES, ROUTES_PATH } from "../constants/routes";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store";
 import store from "../app/Store.js";
@@ -89,6 +89,10 @@ describe("Given I am connected as an employee", () => {
 
     describe("And I click on the New Bill Button", () => {
       test("Then the New Bill Page should open", async () => {
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname });
+        };
+
         document.body.innerHTML = BillsUI({ data: bills });
 
         const newBillButton = screen.getByTestId("btn-new-bill");
@@ -102,13 +106,13 @@ describe("Given I am connected as an employee", () => {
 
         const handleClickNewBill = jest.fn(bill.handleClickNewBill);
         newBillButton.addEventListener("click", handleClickNewBill);
-        // fireEvent.click(newBillButton);
+        fireEvent.click(newBillButton);
 
-        // await waitFor(() => screen.getByTestId("form-new-bill"));
+        await waitFor(() => screen.getByTestId("form-new-bill"));
 
         expect(newBillButton).toBeTruthy();
-        // expect(handleClickNewBill).toHaveBeenCalled();
-        // expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
+        expect(handleClickNewBill).toHaveBeenCalled();
+        expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
       });
     });
 
@@ -205,7 +209,9 @@ describe("Given I am connected as an employee", () => {
         await waitFor(() => screen.getByText("Mes notes de frais"));
 
         expect(logSpy).toHaveBeenCalledTimes(2);
-        // expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("Error"));
+        expect(logSpy.mock.calls[0][0].stack).toMatch(
+          /RangeError: Invalid time value/
+        );
       });
     });
 
