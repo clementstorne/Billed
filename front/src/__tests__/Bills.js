@@ -233,8 +233,7 @@ describe("Given I am connected as an employee", () => {
           window.onNavigate(ROUTES_PATH.Bills);
           await new Promise(process.nextTick);
 
-          document.body.innerHTML = BillsUI({ error: "Erreur 404" });
-          const message = await screen.getByText(/Erreur 404/);
+          const message = await screen.getByTestId("error-message");
           expect(message).toBeTruthy();
         });
       });
@@ -252,8 +251,7 @@ describe("Given I am connected as an employee", () => {
           window.onNavigate(ROUTES_PATH.Bills);
           await new Promise(process.nextTick);
 
-          document.body.innerHTML = BillsUI({ error: "Erreur 500" });
-          const message = await screen.getByText(/Erreur 500/);
+          const message = await screen.getByTestId("error-message");
           expect(message).toBeTruthy();
         });
       });
